@@ -1,7 +1,7 @@
 ## Let me click and send
 
-A simple Minecraft mod that reverts click event `run_command` restriction which introduced in 1.19.1-rc1,
-so non-command messages can be sent freely by a click again
+A simple Minecraft client-side mod, that reverts the `run_command` click event restriction introduced in 1.19.1-rc1,
+so non-command messages can be sent freely via `run_command` click event again
 
 ### Example
 
