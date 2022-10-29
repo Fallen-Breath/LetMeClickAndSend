@@ -1,16 +1,15 @@
-package me.fallenbreath.template_mod;
+package me.fallenbreath.letmeclickandsend;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class TemplateMod implements ModInitializer
+public class LetMeClickAndSendMod implements ModInitializer
 {
 	public static final Logger LOGGER = LogManager.getLogger();
 
-	public static final String MOD_NAME = "TemplateMod";
-	public static final String MOD_ID = "template_mod";
+	public static final String MOD_ID = "letmeclickandsend";
 	public static String VERSION = "unknown";
 
 	@Override
