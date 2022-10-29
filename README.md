@@ -1,5 +1,7 @@
 ## Let me click and send
 
+[![Modrinth](https://img.shields.io/modrinth/dt/pGbwwB5d?label=Modrinth%20Downloads)](https://modrinth.com/mod/letmeclickandsend)
+
 A simple Minecraft client-side mod, that reverts the `run_command` click event restriction introduced in 1.19.1-rc1,
 so non-command messages can be sent freely via `run_command` click event again
 
