@@ -31,7 +31,7 @@ What actually happens: '...'
 Describe the environment to reproduce this bug:
 
 - Minecraft version: '...'
-- TemplateMod version: '...'
+- Let Me Click And Send version: '...'
 - Other related mod versions: '...'
 - ...
 
