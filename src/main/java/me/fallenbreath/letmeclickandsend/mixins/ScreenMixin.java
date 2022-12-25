@@ -37,6 +37,16 @@ public abstract class ScreenMixin
 	)
 	private void justSendTheChat$letmeclickandsend(Logger logger, String loggingMessage, Object clickEventContent)
 	{
-		this.client.player.sendChatMessage((String) clickEventContent, null);
+		// message.charAt(0) != '/'
+		String message = (String)clickEventContent;
+
+		// reference: net.minecraft.client.gui.screen.ChatScreen.sendMessage
+		// for how to send a chat message
+
+		//#if MC >= 11903
+		//$$ this.client.player.networkHandler.sendChatMessage(message);
+		//#else
+		this.client.player.sendChatMessage(message, null);
+		//#endif
 	}
 }
