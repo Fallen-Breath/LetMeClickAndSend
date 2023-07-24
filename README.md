@@ -21,7 +21,8 @@ With this mod, after clicking, you will automatically send a `hi` message to the
 
 ### Requirements
 
-It's a client-side only mod
+It's a client-side only mod. It requires 0 extra dependency
 
-- Fabric loader
+Requirements:
+
 - Minecraft >= 1.19.1
