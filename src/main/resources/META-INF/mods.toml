@@ -1,0 +1,21 @@
+modLoader = "javafml"
+loaderVersion = "[31,)"
+license = "LGPLv3"
+
+[[mods]]
+modId = "${id}"
+version = "${version}"
+displayName = "${name}"
+displayURL = "https://github.com/Fallen-Breath/LetMeClickAndSend"
+authors = "Fallen_Breath"
+description = '''
+A simple Minecraft client-side mod, that reverts the `run_command` click event restriction introduced in 1.19.1-rc1, so non-command messages can be sent freely via `run_command` click event again
+'''
+logoFile = "icon.png"
+
+[[dependencies."${id}"]]
+modId = "minecraft"
+mandatory = true
+versionRange = "${minecraft_dependency}"
+ordering = "NONE"
+side = "BOTH"
