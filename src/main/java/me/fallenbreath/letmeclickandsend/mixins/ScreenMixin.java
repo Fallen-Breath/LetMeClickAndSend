@@ -52,7 +52,7 @@ public abstract class ScreenMixin
 					remap = false,
 					ordinal = 1
 			),
-			require = 0,
+			require = 1,
 			remap = true
 	)
 	private void justSendTheChat$letmeclickandsend(Logger logger, String loggingMessage, Object clickEventContent)
