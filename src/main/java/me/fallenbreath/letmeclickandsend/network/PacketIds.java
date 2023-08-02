@@ -18,28 +18,12 @@
  * along with Let Me Click And Send.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.fallenbreath.letmeclickandsend;
+package me.fallenbreath.letmeclickandsend.network;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import me.fallenbreath.letmeclickandsend.LetMeClickAndSendMod;
+import net.minecraft.util.Identifier;
 
-//#if FORGE
-//$$ @net.minecraftforge.fml.common.Mod("letmeclickandsend")
-//#endif
-public class LetMeClickAndSendMod
-		//#if FABRIC
-		implements net.fabricmc.api.ModInitializer
-		//#endif
+public class PacketIds
 {
-	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MOD_ID = "letmeclickandsend";
-
-	//#if FABRIC
-	@Override public void onInitialize()
-	//#elseif FORGE
-	//$$ public LetMeClickAndSendMod()
-	//#endif
-	{
-		LOGGER.info("Let me click and send!");
-	}
+	public static final Identifier HI = new Identifier(LetMeClickAndSendMod.MOD_ID, "hi");
 }

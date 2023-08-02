@@ -18,7 +18,7 @@
  * along with Let Me Click And Send.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.fallenbreath.letmeclickandsend.mixins;
+package me.fallenbreath.letmeclickandsend.mixins.core.client;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;

@@ -18,28 +18,21 @@
  * along with Let Me Click And Send.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.fallenbreath.letmeclickandsend;
+package me.fallenbreath.letmeclickandsend.mixins.core.server;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import me.fallenbreath.letmeclickandsend.core.TextClickEventModifier;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
-//#if FORGE
-//$$ @net.minecraftforge.fml.common.Mod("letmeclickandsend")
-//#endif
-public class LetMeClickAndSendMod
-		//#if FABRIC
-		implements net.fabricmc.api.ModInitializer
-		//#endif
+@Mixin(ServerPlayerEntity.class)
+public abstract class ServerPlayerEntityMixin
 {
-	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MOD_ID = "letmeclickandsend";
-
-	//#if FABRIC
-	@Override public void onInitialize()
-	//#elseif FORGE
-	//$$ public LetMeClickAndSendMod()
-	//#endif
+	@ModifyVariable(method = "sendMessageToClient", at = @At("HEAD"), argsOnly = true)
+	private Text modifyTextInSendCommandHoverEvents(Text text)
 	{
-		LOGGER.info("Let me click and send!");
+		return TextClickEventModifier.modifyText((ServerPlayerEntity)(Object)this, text);
 	}
 }

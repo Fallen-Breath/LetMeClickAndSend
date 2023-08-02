@@ -4,9 +4,14 @@
   "package": "me.fallenbreath.letmeclickandsend.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "core.server.CommandManagerMixin",
+    "core.server.MinecraftServerAccessor",
+    "core.server.ServerPlayerEntityMixin",
+    "network.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
-    "ScreenMixin"
+    "core.client.ScreenMixin",
+    "network.ClientPlayNetworkHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

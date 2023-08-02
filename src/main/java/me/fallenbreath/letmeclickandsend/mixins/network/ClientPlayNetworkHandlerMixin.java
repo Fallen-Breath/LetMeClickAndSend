@@ -18,28 +18,27 @@
  * along with Let Me Click And Send.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.fallenbreath.letmeclickandsend;
+package me.fallenbreath.letmeclickandsend.mixins.network;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import me.fallenbreath.letmeclickandsend.network.ClientNetworkHandler;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//#if FORGE
-//$$ @net.minecraftforge.fml.common.Mod("letmeclickandsend")
-//#endif
-public class LetMeClickAndSendMod
-		//#if FABRIC
-		implements net.fabricmc.api.ModInitializer
-		//#endif
+@Mixin(ClientPlayNetworkHandler.class)
+public abstract class ClientPlayNetworkHandlerMixin
 {
-	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MOD_ID = "letmeclickandsend";
-
-	//#if FABRIC
-	@Override public void onInitialize()
-	//#elseif FORGE
-	//$$ public LetMeClickAndSendMod()
-	//#endif
+	@Inject(method = "onGameJoin", at = @At("RETURN"))
+	private void playerJoinClientHookOnGameJoin$LMCAS(CallbackInfo ci)
 	{
-		LOGGER.info("Let me click and send!");
+		ClientNetworkHandler.sendHi();
+	}
+
+	@Inject(method = "onPlayerRespawn", at = @At("RETURN"))
+	private void playerJoinClientHookOnPlayerRespawn$LMCAS(CallbackInfo ci)
+	{
+		ClientNetworkHandler.sendHi();
 	}
 }

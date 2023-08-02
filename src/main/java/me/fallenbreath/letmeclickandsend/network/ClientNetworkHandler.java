@@ -18,28 +18,26 @@
  * along with Let Me Click And Send.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.fallenbreath.letmeclickandsend;
+package me.fallenbreath.letmeclickandsend.network;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import io.netty.buffer.Unpooled;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.packet.c2s.play.CustomPayloadC2SPacket;
 
-//#if FORGE
-//$$ @net.minecraftforge.fml.common.Mod("letmeclickandsend")
-//#endif
-public class LetMeClickAndSendMod
-		//#if FABRIC
-		implements net.fabricmc.api.ModInitializer
-		//#endif
+public class ClientNetworkHandler
 {
-	public static final Logger LOGGER = LogManager.getLogger();
-	public static final String MOD_ID = "letmeclickandsend";
-
-	//#if FABRIC
-	@Override public void onInitialize()
-	//#elseif FORGE
-	//$$ public LetMeClickAndSendMod()
-	//#endif
+	public static void sendHi()
 	{
-		LOGGER.info("Let me click and send!");
+		ClientPlayNetworkHandler networkHandler = MinecraftClient.getInstance().getNetworkHandler();
+		if (networkHandler != null)
+		{
+			PacketByteBuf buf = new PacketByteBuf(Unpooled.buffer());
+			buf.writeNbt(new NbtCompound());  // for future compatibility
+
+			networkHandler.sendPacket(new CustomPayloadC2SPacket(PacketIds.HI, buf));
+		}
 	}
 }
