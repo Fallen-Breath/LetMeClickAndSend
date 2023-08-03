@@ -16,17 +16,21 @@ plugins {
 
 preprocess {
 	def mc1192_fabric = createNode('1.19.2-fabric', 1_19_02, 'yarn')
+	def mc1193_fabric = createNode('1.19.3-fabric', 1_19_03, 'yarn')
 	def mc1194_fabric = createNode('1.19.4-fabric', 1_19_04, 'yarn')
 	def mc1201_fabric = createNode('1.20.1-fabric', 1_20_01, 'yarn')
 
 	def mc1192_forge  = createNode('1.19.2-forge' , 1_19_02, 'yarn')
+	def mc1193_forge  = createNode('1.19.3-forge' , 1_19_03, 'yarn')
 	def mc1194_forge  = createNode('1.19.4-forge' , 1_19_04, 'yarn')
 	def mc1201_forge  = createNode('1.20.1-forge' , 1_20_01, 'yarn')
 
-	mc1192_fabric.link(mc1194_fabric, null)
+	mc1192_fabric.link(mc1193_fabric, null)
+	mc1193_fabric.link(mc1194_fabric, null)
 	mc1194_fabric.link(mc1201_fabric, null)
 
 	mc1192_fabric.link(mc1192_forge, null)
+	mc1193_fabric.link(mc1193_forge, null)
 	mc1194_fabric.link(mc1194_forge, null)
 	mc1201_fabric.link(mc1201_forge, null)
 }
