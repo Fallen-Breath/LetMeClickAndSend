@@ -1,7 +1,7 @@
 ## Let me click and send
 
-[![MC Versions](https://cf.way2muchnoise.eu/versions/For%20MC_let-me-click-and-send_all.svg)](https://www.curseforge.com/minecraft/mc-mods/let-me-click-and-send)
-[![CurseForge](https://cf.way2muchnoise.eu/full_let-me-click-and-send_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/let-me-click-and-send)
+[![MC Versions](https://cf.way2muchnoise.eu/versions/For%20MC_694888_all.svg)](https://www.curseforge.com/minecraft/mc-mods/let-me-click-and-send)
+[![CurseForge](https://cf.way2muchnoise.eu/full_694888_downloads.svg)](https://www.curseforge.com/minecraft/mc-mods/let-me-click-and-send)
 [![Modrinth](https://img.shields.io/modrinth/dt/pGbwwB5d?label=Modrinth%20Downloads)](https://modrinth.com/mod/letmeclickandsend)
 
 A simple Minecraft client-side mod, that reverts the `run_command` click event restriction introduced in 1.19.1-rc1,
