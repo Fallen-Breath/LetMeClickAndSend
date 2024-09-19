@@ -25,6 +25,8 @@ import org.apache.logging.log4j.Logger;
 
 //#if FORGE
 //$$ @net.minecraftforge.fml.common.Mod("letmeclickandsend")
+//#elseif NEOFORGE
+//$$ @net.neoforged.fml.common.Mod("letmeclickandsend")
 //#endif
 public class LetMeClickAndSendMod
 		//#if FABRIC
@@ -35,7 +37,7 @@ public class LetMeClickAndSendMod
 
 	//#if FABRIC
 	@Override public void onInitialize()
-	//#elseif FORGE
+	//#elseif FORGE_LIKE
 	//$$ public LetMeClickAndSendMod()
 	//#endif
 	{
