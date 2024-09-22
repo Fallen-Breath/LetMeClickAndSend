@@ -7,6 +7,14 @@
 A simple Minecraft client-side mod, that reverts the `run_command` click event restriction introduced in 1.19.1-rc1,
 so non-command messages can be sent freely via `run_command` click event again
 
+If you want a solution without user awareness, here's a server-side only mod that does the same thing:
+[LetMeClickAndSendForServer](https://github.com/Fallen-Breath/LetMeClickAndSendForServer)
+
+| Mod                                                                                       | Side   | Advantage                                 | Disadvantage                                  |
+|-------------------------------------------------------------------------------------------|--------|-------------------------------------------|-----------------------------------------------|
+| [LetMeClickAndSend](https://github.com/Fallen-Breath/LetMeClickAndSend)                   | client | Exactly the same behavior as pre mc1.19.1 | Needs to be installed on all players' clients |        
+| [LetMeClickAndSendForServer](https://github.com/Fallen-Breath/LetMeClickAndSendForServer) | server | No need to install on client              | Reduces maximum chat message length by 7      |     
+
 ### Example
 
 Let's run the following command, and then click the shown text
