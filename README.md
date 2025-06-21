@@ -5,7 +5,7 @@
 [![Modrinth](https://img.shields.io/modrinth/dt/pGbwwB5d?label=Modrinth%20Downloads)](https://modrinth.com/mod/let-me-click-and-send)
 
 A simple Minecraft client-side mod, that reverts the `run_command` click event restriction introduced in 1.19.1-rc1,
-so non-command messages can be sent freely via `run_command` click event again
+so non-command messages can be sent freely as a chat message via `run_command` click event again
 
 If you want a solution without user awareness, here's a server-side only mod that does the same thing:
 [LetMeClickAndSendForServer](https://github.com/Fallen-Breath/LetMeClickAndSendForServer)
@@ -19,13 +19,45 @@ If you want a solution without user awareness, here's a server-side only mod tha
 
 Let's run the following command, and then click the shown text
 
-```
+```bash
+# Minecraft [1.7, 1.21.5)
 /tellraw @a {"text":"click me to send \"hi\"","clickEvent":{"action":"run_command","value":"hi"}}
 ```
 
-In vanilla 1.19.1+, after clicking, you are not able to say anything since `hi` is not a valid command (not starts with `/`)
+In vanilla 1.19.1 ~ 1.21.4, after clicking, you are not able to say anything since `hi` is not a valid command (not starts with `/`)
 
-With this mod, after clicking, you will automatically send a `hi` message to the server, which is the same behavior as the previous Minecraft versions
+With this mod, after clicking, you will automatically send a `hi` chat message to the server, which is the same behavior as the previous Minecraft versions
+
+### MC 1.21.5+
+
+Since MC 1.21.5, the `run_command` behavior has changed a lot
+
+First is the change in command syntax, which has little impact:
+
+```bash
+# Minecraft [1.21.5, ~)
+/tellraw @a {"text":"click me to send \"hi\"","click_event":{"action":"run_command","command":"hi"}}
+```
+
+Next is the change in behavior, which has a greater impact:
+
+- The `command` value is always valid, regardless of whether it starts with a `/` or not
+- The client will strip the `/` prefix from the `command` value and send the remaining string as a command
+
+It's no longer possible to correctly distinguish between "a run_command for sending chat message" and "a run_command for sending command"
+
+As a workaround, LetMeClickAndSend for MC >= 1.21.5 will only directly send certain `command` as chat message.
+By default, only `command` value starting with `!!` will be sent as chat message
+
+A config file located at `./config/letmeclickandsendforserver/config.json` is added for customizing the replacing behavior
+
+```json
+{
+    "sendChatPattern": "!!.*"
+}
+```
+
+The `sendChatPattern` should be a valid regex pattern. All `command` values that fully match the pattern will be as chat messages
 
 ### Requirements
 
