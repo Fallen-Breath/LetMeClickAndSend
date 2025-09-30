@@ -1,53 +1,56 @@
+import com.replaymod.gradle.preprocess.Node
+import groovy.json.JsonSlurper
+
 plugins {
 	id 'maven-publish'
 	id 'com.github.hierynomus.license' version '0.16.1' apply false
-	id 'dev.architectury.loom' version '1.10-SNAPSHOT' apply false
+	id 'dev.architectury.loom' version '1.11-SNAPSHOT' apply false
 
 	// https://github.com/ReplayMod/preprocessor
 	// https://github.com/Fallen-Breath/preprocessor
-	id 'com.replaymod.preprocess' version '0a04a5668b'
+	id 'com.replaymod.preprocess' version 'd452ef7612'
 
 	// https://github.com/Fallen-Breath/yamlang
-	id 'me.fallenbreath.yamlang' version '1.4.1' apply false
+	id 'me.fallenbreath.yamlang' version '1.5.0' apply false
+}
+
+def linkNode(Node src, Node dst) {
+	def mappingFile = rootProject.file("versions/mapping-${src.project}-${dst.project}.txt")
+	src.link(dst, mappingFile.isFile() ? mappingFile : null)
 }
 
 preprocess {
     strictExtraMappings = false
 
-	def mc1192_fabric = createNode('1.19.2-fabric', 1_19_02, '')
-	def mc1194_fabric = createNode('1.19.4-fabric', 1_19_04, '')
-	def mc1204_fabric = createNode('1.20.4-fabric', 1_20_04, '')
-    def mc1206_fabric = createNode('1.20.6-fabric', 1_20_06, '')
-    def mc1215_fabric = createNode('1.21.5-fabric', 1_21_05, '')
-    def mc1216_fabric = createNode('1.21.6-fabric', 1_21_06, '')
+    def settings = new JsonSlurper().parseText(file('settings.json').text)
+    def all_versions = new ArrayList<>(settings.versions)
+    all_versions.sort()  // low -> high
+    Map<String, Node> all_nodes = [:]
 
-	def mc1192_forge = createNode('1.19.2-forge', 1_19_02, '')
-	def mc1194_forge = createNode('1.19.4-forge', 1_19_04, '')
-	def mc1204_forge = createNode('1.20.4-forge', 1_20_04, '')
-    def mc1206_forge = createNode('1.20.6-forge', 1_20_06, '')
-    def mc1215_forge = createNode('1.21.5-forge', 1_21_05, '')
-    def mc1216_forge = createNode('1.21.6-forge', 1_21_06, '')
+    for (String version : all_versions) {
+        String[] versionParts = version.split("-")[0].split("\\.")
+        if (versionParts.size() == 2) {
+            versionParts = [versionParts[0], versionParts[1], "0"]
+        }
+        int versionId = Integer.parseInt(versionParts[0]) * 10000 + Integer.parseInt(versionParts[1]) * 100 + Integer.parseInt(versionParts[2])
+        all_nodes[version] = createNode(version, versionId, '')
+    }
 
-    def mc1206_neoforge = createNode('1.20.6-neoforge', 1_20_06, '')
-    def mc1215_neoforge = createNode('1.21.5-neoforge', 1_21_05, '')
-    def mc1216_neoforge = createNode('1.21.6-neoforge', 1_21_06, '')
-
-	mc1192_fabric.link(mc1194_fabric, null)
-	mc1194_fabric.link(mc1204_fabric, null)
-    mc1204_fabric.link(mc1206_fabric, null)
-    mc1206_fabric.link(mc1215_fabric, null)
-    mc1215_fabric.link(mc1216_fabric, null)
-
-	mc1192_fabric.link(mc1192_forge, null)
-	mc1194_fabric.link(mc1194_forge, null)
-	mc1204_fabric.link(mc1204_forge, null)
-    mc1206_fabric.link(mc1206_forge, null)
-    mc1215_fabric.link(mc1215_forge, null)
-    mc1216_fabric.link(mc1216_forge, null)
-
-    mc1206_fabric.link(mc1206_neoforge, null)
-    mc1215_fabric.link(mc1215_neoforge, null)
-    mc1216_fabric.link(mc1216_neoforge, null)
+    Node prev_fabric_node = null
+    for (String version : all_versions) {
+        def (mc_version, mod_brand) = version.split("-")
+        def node = all_nodes[version]
+        switch (mod_brand) {
+            case "fabric":
+                if (prev_fabric_node != null) {
+                    linkNode(prev_fabric_node, all_nodes[version])
+                }
+                prev_fabric_node = node
+                break
+            default:
+                linkNode(all_nodes["${mc_version}-fabric"], all_nodes[version])
+        }
+    }
 }
 
 tasks.register('buildAndGather') {
