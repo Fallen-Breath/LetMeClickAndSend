@@ -46,11 +46,11 @@ Next is the change in behavior, which has a greater impact:
 
 It's no longer possible to correctly distinguish between "a run_command for sending chat message" and "a run_command for sending command"
 
-As a workaround, LetMeClickAndSendForServer for MC >= 1.21.5 will only replace certain `command` with the `/lmcas` command.
+As a workaround, LetMeClickAndSend for MC >= 1.21.5 will only allow certain commands to bypass the vanilla check and always be click-and-send-able.
 By default, only `command` value starting with `!!`, which is a commonly-used command prefix
-in [MCDReforged](https://github.com/MCDReforged/MCDReforged) plugin ecosystem, will be replaced
+in [MCDReforged](https://github.com/MCDReforged/MCDReforged) plugin ecosystem, will be allowed
 
-A config file located at `./config/letmeclickandsendforserver/config.json` is added for customizing the replacing behavior
+A config file located at `./config/letmeclickandsend/config.json` is added for customizing the bypass behavior
 
 ```json
 {
