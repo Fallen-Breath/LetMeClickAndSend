@@ -21,9 +21,9 @@
 package me.fallenbreath.letmeclickandsend.mixins;
 
 import me.fallenbreath.letmeclickandsend.LmcasConfig;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayNetworkHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.multiplayer.ClientPacketListener;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,17 +38,17 @@ public abstract class ScreenMixin
 {
 	@Shadow
 	@Nullable
-	protected MinecraftClient client;
+	protected Minecraft minecraft;
 
 	@Unique
 	private boolean cancelThisCommandSendSinceChatWasSent = false;
 
 	@ModifyVariable(
-			method = "handleTextClick",
+			method = "handleComponentClicked",
 			slice = @Slice(
 					from = @At(
 							value = "INVOKE",
-							target = "Lnet/minecraft/text/ClickEvent$RunCommand;command()Ljava/lang/String;"
+							target = "Lnet/minecraft/network/chat/ClickEvent$RunCommand;command()Ljava/lang/String;"
 					)
 			),
 			at = @At(
@@ -63,11 +63,11 @@ public abstract class ScreenMixin
 	private String justSendTheChat$letmeclickandsend(String command)
 	{
 		this.cancelThisCommandSendSinceChatWasSent = false;
-		if (this.client != null && this.client.player != null)
+		if (this.minecraft != null && this.minecraft.player != null)
 		{
 			if (LmcasConfig.getInstance().getSendChatPattern().matcher(command).matches())
 			{
-				this.client.player.networkHandler.sendChatMessage(command);
+				this.minecraft.player.connection.sendChat(command);
 				this.cancelThisCommandSendSinceChatWasSent = true;
 			}
 		}
@@ -75,15 +75,15 @@ public abstract class ScreenMixin
 	}
 
 	@Redirect(
-			method = "handleTextClick",
+			method = "handleComponentClicked",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendCommand(Ljava/lang/String;)Z"
+					target = "Lnet/minecraft/client/multiplayer/ClientPacketListener;sendUnsignedCommand(Ljava/lang/String;)Z"
 			),
 			require = 1,
 			allow = 1
 	)
-	private boolean skipIfChatWasSent$letmeclickandsend(ClientPlayNetworkHandler instance, String command)
+	private boolean skipIfChatWasSent$letmeclickandsend(ClientPacketListener instance, String command)
 	{
 		if (this.cancelThisCommandSendSinceChatWasSent)
 		{
@@ -92,6 +92,6 @@ public abstract class ScreenMixin
 		}
 
 		// vanilla
-		return instance.sendCommand(command);
+		return instance.sendUnsignedCommand(command);
 	}
 }

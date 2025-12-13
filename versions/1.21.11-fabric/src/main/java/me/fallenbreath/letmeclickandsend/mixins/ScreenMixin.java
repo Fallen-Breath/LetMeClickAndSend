@@ -21,8 +21,8 @@
 package me.fallenbreath.letmeclickandsend.mixins;
 
 import me.fallenbreath.letmeclickandsend.LmcasConfig;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.player.LocalPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,15 +32,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ScreenMixin
 {
 	@Inject(
-			method = "handleRunCommand",
+			method = "clickCommandAction",
 			at = @At("HEAD"),
 			cancellable = true
 	)
-	private static void justSendTheChat$letmeclickandsend(ClientPlayerEntity player, String command, Screen screenAfterRun, CallbackInfo ci)
+	private static void justSendTheChat$letmeclickandsend(LocalPlayer player, String command, Screen screen, CallbackInfo ci)
 	{
 		if (LmcasConfig.getInstance().getSendChatPattern().matcher(command).matches())
 		{
-			player.networkHandler.sendChatMessage(command);
+			player.connection.sendChat(command);
 			ci.cancel();
 		}
 	}

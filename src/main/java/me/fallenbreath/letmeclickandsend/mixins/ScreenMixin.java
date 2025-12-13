@@ -20,8 +20,8 @@
 
 package me.fallenbreath.letmeclickandsend.mixins;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,11 +35,11 @@ public abstract class ScreenMixin
 {
 	@Shadow
 	@Nullable
-	protected MinecraftClient client;
+	protected Minecraft minecraft;
 
 	@SuppressWarnings("ConstantConditions")
 	@Redirect(
-			method = "handleTextClick",
+			method = "handleComponentClicked",
 			slice = @Slice(
 					from = @At(
 							value = "CONSTANT",
@@ -64,9 +64,9 @@ public abstract class ScreenMixin
 		// for how to send a chat message
 
 		//#if MC >= 11903
-		//$$ this.client.player.networkHandler.sendChatMessage(message);
+		//$$ this.minecraft.player.connection.sendChat(message);
 		//#else
-		this.client.player.sendChatMessage(message, null);
+		this.minecraft.player.chatSigned(message, null);
 		//#endif
 	}
 }
