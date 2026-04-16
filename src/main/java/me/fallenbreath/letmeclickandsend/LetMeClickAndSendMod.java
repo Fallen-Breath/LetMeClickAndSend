@@ -20,28 +20,23 @@
 
 package me.fallenbreath.letmeclickandsend;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.mojang.logging.LogUtils;
+import org.slf4j.Logger;
 
-//#if FORGE
-//$$ @net.minecraftforge.fml.common.Mod("letmeclickandsend")
-//#elseif NEOFORGE
-//$$ @net.neoforged.fml.common.Mod("letmeclickandsend")
-//#endif
+@net.minecraftforge.fml.common.Mod(LetMeClickAndSendMod.MOD_ID)
+@net.neoforged.fml.common.Mod(LetMeClickAndSendMod.MOD_ID)
 public class LetMeClickAndSendMod
-		//#if FABRIC
-		implements net.fabricmc.api.ModInitializer
-		//#endif
 {
+	public static final Logger LOGGER = LogUtils.getLogger();
 	public static final String MOD_ID = "letmeclickandsend";
 
-	public static final Logger LOGGER = LogManager.getLogger();
+	public static void fabricInit()
+	{
+		//noinspection InstantiationOfUtilityClass
+		new LetMeClickAndSendMod();
+	}
 
-	//#if FABRIC
-	@Override public void onInitialize()
-	//#elseif FORGE_LIKE
-	//$$ public LetMeClickAndSendMod()
-	//#endif
+	public LetMeClickAndSendMod()
 	{
 		LOGGER.info("Let me click and send!");
 

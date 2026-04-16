@@ -11,7 +11,7 @@ import sys
 
 def main():
 	target_subproject_env = os.environ.get('TARGET_SUBPROJECT', '')
-	target_subprojects = list(filter(None, target_subproject_env.split(',') if target_subproject_env != '' else []))
+	target_subprojects = [x for x in target_subproject_env.split(',') if x]
 	print('target_subprojects: {}'.format(target_subprojects))
 
 	with open('settings.json') as f:
@@ -32,7 +32,7 @@ def main():
 	matrix_entries = []
 	for subproject in subprojects:
 		mod_brand = subproject.split('-')[-1]
-		assert mod_brand in ['fabric', 'forge', 'neoforge']
+		assert mod_brand in ['fabric', 'forge', 'neoforge', 'merged']
 		matrix_entries.append({
 			'subproject': subproject,
 			'mod_brand': mod_brand,

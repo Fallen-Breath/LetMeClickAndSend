@@ -12,13 +12,14 @@
     "homepage": "https://github.com/Fallen-Breath/LetMeClickAndSend",
     "sources": "https://github.com/Fallen-Breath/LetMeClickAndSend"
   },
+  "license": "LGPL-3.0",
 
-  "icon": "assets/letmeclickandsend/icon.png",
+  "icon": "icon.png",
 
   "environment": "client",
   "entrypoints": {
     "main": [
-      "me.fallenbreath.letmeclickandsend.LetMeClickAndSendMod"
+      "me.fallenbreath.letmeclickandsend.LetMeClickAndSendMod::fabricInit"
     ]
   },
   "mixins": [
